@@ -77,98 +77,43 @@ a.comment_quote_link {
 
 == Changelog ==
 
-= 1.0 =
+= 2.2 =
 
-* First release
+* Release date - January 17, 2017
+* The plugin was adopted by me, Stanko Metodiev. I've talked with Joen and he agreed to transfer the plugin. The fun starts here.
+* Fix a few deprecated notices and PHP errors.
+* Reverse the order of the changelog.
 
-= 1.2 =
+= 2.1.7 =
 
-* Moved all JS to a separate file. Should improve loadtimes.
-* Added "cite" attribute to blockquote.
-* Removed "<Author> said:" text because it annoyed me. To enable it again, edit "quote-comments.js" and remove the line that says "author = null;"
-* Used "get_comment_time" as hook, which moves the quote text to a better place on each comment.
+* Fixed problem with smileys and paragraphs disappearing on some themes. Credit to Gabi for fixing this! Thanks Gabi!
 
-= 1.3 =
 
-* Fixed issue with the quote link being unstylable
-* Should fix problems with the comments feed breaking
+= 2.1.6 =
 
-= 1.4 =
+* Fixed problem with multiple linebreaks being collapsed
 
-* Fixed issue with the plugin only being compatible with Wordpress 2.7. Should now be more backwards compatible, and more compatible in general. 
-* Added back "<Author>: " in the quote. Now inside the blockquotes.
-* Added a pipe to separate the quote text from the comment.
-* Good news and bad news. The quote icon cannot be outputted near the comment time. If it is, then the HTML won't validate. Right now I have moved the quote link next to the reply button in Wordpress 2.7, and above the comment in older than 2.7. The comment is still CSS stylable using span.quote {}.
+= 2.1.4 =
 
-= 1.4.1 =
+* Turns out quoting didn't actually work. It should work now.
 
-* Added link back to commenters name in a link anchor.
+= 2.1.3 =
 
-= 1.5 =
+* Made the plugin compatible with WordPress 3.0.5.
+* The option "get_comment_time" on the options page will most likely be phased out in the future, please don't rely on it (it's buggy anyway).
 
-* Had to use "get_comment_text" as a hook, because the reply link is not available on the deepest level threading. On the plus side, this should mean the plugin is now 2.6 compatible again.
-* Added a minimalistic stylesheet which floats the quote link left, placing it next to the reply link.
+= 2.1.2 =
 
-= 1.6 =
+* Escaped names to prevent JavaScript injection. Thanks to Chris Travers from Metatron Technology Consulting for reporting this issue.
 
-* Should finally nuke the problem that plagued validation. Thanks Ute.
+= 2.1.1 =
 
-= 1.6.1 = 
+* Fixed a bug where the reply link wouldn't work in Google Chrome.
 
-* Did further tweaks to prevent validation from breaking. Previously, if you had written something in the comment field and not made a linebreak, and then proceeded to quote something, the quote tag would be inserted right after the text you had already written, causing bad formatting. Now when you quote something, two linebreaks are always inserted before any quote code. 
-* Uncommented the "float left" CSS because it borked most layouts. I encourage you to write your own CSS.
+= 2.1 =
 
-= 1.6.2 =
-
-* Fixed problems with the comments feed breaking. Again.
-
-= 1.6.3 =
-
-* Fixed a problem where nested blockquotes weren't removed when quoting.
-
-= 1.7 =
-
-* Made the plugin compatible with MCEComments. As it turns out, MCEComments is (at the time of this writing) not compatible with Wordpress 2.7 threaded comments. So if you're having trouble with that, it's not "Quote Comments" fault. MCEComments is working on the issue, though.
-
-= 1.7.5 = 
-
-* Removed the Textile support. This plugin still works with Textile, it just won't use bq. to create quotes any more. This borked when selecting several paragraphs to quote.
-
-= 1.7.6 =
-
-* Added localization features. Easier to localize.
-* Fixed so that the quote icon doesn't show up if comments are closed, or user registration is required and the user isn't logged in.
-
-= 1.8 =
-
-* Translation release! Includes Danish and German (thanks to Daniel H�ly)
-* Moved script and CSS includes to use "enqueue_scripts".
-
-= 1.9 =
-
-* Moved the "quote" button HTML to be right next to the date. I think this used to break validation, perhaps this has been fixed in a recent Wordpress version. Let me know if it's now broken in older versions.
-
-= 1.9.1 =
-
-* Added an options page with the ability to pick which hook to use to insert the quote link. Unfortunately I had to do this due to a recent change where I switched hooks to a superior place (a hook that's apparently not there in all themes). The net result is that you should be able to pick one of the two hooks, to get the quote link to show up.
-* Added an option to customize the text that shows up in the commentlink. Kinda makes the languages folder a bit obsolete. I'll deal with that later.
-* Bugfixes.
-
-= 1.9.2 =
-
-* Added checks to see whether the plugin is loaded in the admin or the blog, and only adds quote stuff when on the blog.
-
-= 1.9.3 =
-
-* Now the commentform jumps to the comment thread whose quote button you clicked. Tip: David Abrahams.
-
-= 1.9.5 =
-
-* It may now be simpler to quote using MCEComments, as an extra linebreak is inserted so it's easy to break out of the "blockquote" tag. 
-
-= 1.9.7 =
-
-* QC now inserts fewer linebreaks when quoting and using TinyMCE comments.
+* Added a simple "reply" button, for people that don't like threaded comments.
+* I think I also fixed a semantic bug.
 
 = 2.0 =
 
@@ -178,41 +123,99 @@ a.comment_quote_link {
 * Rewrote options page.
 * Updated english and danish and swedish po files. German and dutch still work, they just haven't translated the options page.
 
-= 2.1 =
+= 1.9.7 =
 
-* Added a simple "reply" button, for people that don't like threaded comments.
-* I think I also fixed a semantic bug. 
+* QC now inserts fewer linebreaks when quoting and using TinyMCE comments.
 
-= 2.1.1 =
+= 1.9.5 =
 
-* Fixed a bug where the reply link wouldn't work in Google Chrome.
+* It may now be simpler to quote using MCEComments, as an extra linebreak is inserted so it's easy to break out of the "blockquote" tag.
 
-= 2.1.2 =
+= 1.9.3 =
 
-* Escaped names to prevent JavaScript injection. Thanks to Chris Travers from Metatron Technology Consulting for reporting this issue.
+* Now the commentform jumps to the comment thread whose quote button you clicked. Tip: David Abrahams.
 
-= 2.1.3 =
+= 1.9.2 =
 
-* Made the plugin compatible with WordPress 3.0.5.
-* The option "get_comment_time" on the options page will most likely be phased out in the future, please don't rely on it (it's buggy anyway).
+* Added checks to see whether the plugin is loaded in the admin or the blog, and only adds quote stuff when on the blog.
 
-= 2.1.4 =
+= 1.9.1 =
 
-* Turns out quoting didn't actually work. It should work now.
+* Added an options page with the ability to pick which hook to use to insert the quote link. Unfortunately I had to do this due to a recent change where I switched hooks to a superior place (a hook that's apparently not there in all themes). The net result is that you should be able to pick one of the two hooks, to get the quote link to show up.
+* Added an option to customize the text that shows up in the commentlink. Kinda makes the languages folder a bit obsolete. I'll deal with that later.
+* Bugfixes.
 
-= 2.1.6 =
+= 1.9 =
 
-* Fixed problem with multiple linebreaks being collapsed
+* Moved the "quote" button HTML to be right next to the date. I think this used to break validation, perhaps this has been fixed in a recent Wordpress version. Let me know if it's now broken in older versions.
 
-= 2.1.7 =
+= 1.8 =
 
-* Fixed problem with smileys and paragraphs disappearing on some themes. Credit to Gabi for fixing this! Thanks Gabi!
+* Translation release! Includes Danish and German (thanks to Daniel H�ly)
+* Moved script and CSS includes to use "enqueue_scripts".
 
-= 2.2 =
+= 1.7.6 =
 
-* Release date - January 17, 2017
-* The plugin was adopted by Stanko Metodiev. I've talked with Joen and he agreed to transfer the plugin. The fun starts here.
-* Fix a few deprecated notices and PHP errors.
+* Added localization features. Easier to localize.
+* Fixed so that the quote icon doesn't show up if comments are closed, or user registration is required and the user isn't logged in.
+
+= 1.7.5 = 
+
+* Removed the Textile support. This plugin still works with Textile, it just won't use bq. to create quotes any more. This borked when selecting several paragraphs to quote.
+
+= 1.7 =
+
+* Made the plugin compatible with MCEComments. As it turns out, MCEComments is (at the time of this writing) not compatible with Wordpress 2.7 threaded comments. So if you're having trouble with that, it's not "Quote Comments" fault. MCEComments is working on the issue, though.
+
+
+= 1.6.3 =
+
+* Fixed a problem where nested blockquotes weren't removed when quoting.
+
+= 1.6.2 =
+
+* Fixed problems with the comments feed breaking. Again.
+
+= 1.6.1 = 
+
+* Did further tweaks to prevent validation from breaking. Previously, if you had written something in the comment field and not made a linebreak, and then proceeded to quote something, the quote tag would be inserted right after the text you had already written, causing bad formatting. Now when you quote something, two linebreaks are always inserted before any quote code. 
+* Uncommented the "float left" CSS because it borked most layouts. I encourage you to write your own CSS.
+
+= 1.6 =
+
+* Should finally nuke the problem that plagued validation. Thanks Ute.
+
+= 1.5 =
+
+* Had to use "get_comment_text" as a hook, because the reply link is not available on the deepest level threading. On the plus side, this should mean the plugin is now 2.6 compatible again.
+* Added a minimalistic stylesheet which floats the quote link left, placing it next to the reply link.
+
+= 1.4.1 =
+
+* Added link back to commenters name in a link anchor.
+
+= 1.4 =
+
+* Fixed issue with the plugin only being compatible with Wordpress 2.7. Should now be more backwards compatible, and more compatible in general. 
+* Added back "<Author>: " in the quote. Now inside the blockquotes.
+* Added a pipe to separate the quote text from the comment.
+* Good news and bad news. The quote icon cannot be outputted near the comment time. If it is, then the HTML won't validate. Right now I have moved the quote link next to the reply button in Wordpress 2.7, and above the comment in older than 2.7. The comment is still CSS stylable using span.quote {}.
+
+= 1.3 =
+
+* Fixed issue with the quote link being unstylable
+* Should fix problems with the comments feed breaking
+
+= 1.2 =
+
+* Moved all JS to a separate file. Should improve loadtimes.
+* Added "cite" attribute to blockquote.
+* Removed "<Author> said:" text because it annoyed me. To enable it again, edit "quote-comments.js" and remove the line that says "author = null;"
+* Used "get_comment_time" as hook, which moves the quote text to a better place on each comment.
+
+= 1.0 =
+
+* First release.
 
 == Upgrade Notice ==
 
