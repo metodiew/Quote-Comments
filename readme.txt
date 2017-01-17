@@ -1,13 +1,18 @@
 === Quote Comments ===
-Contributors: Joen
-Tags: adopt-me, quote, comments, javascript, textile, wysiwyg
+Contributors: metodiew, Joen
+Donate link: https://metodiew.com/
+Tags: quote, comments, javascript, textile, wysiwyg
 Requires at least: 2.5.0
-Tested up to: 3.4.1
+Tested up to: 4.7
+Stable tag: 2.2
 Stable tag: trunk
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
 
 == Description ==
 
-<strong>Adopt this plugin</strong>: I no longer have time to actively maintain this plugin. Feel free to adopt it.
+<strong>An important note: </strong>the plugin was adopted and it will be updated a few times in the next couple of weeks. I'll need your help with the testing, reporting potential issues, suggesting new improvements, etc :)
 
 This plugin adds a tiny link that says "Quote" on each comment on your posts. Click it, and the contents of the comment is copied to the comment area, wrapped in blockquote tags.
 
@@ -136,7 +141,7 @@ a.comment_quote_link {
 
 = 1.8 =
 
-* Translation release! Includes Danish and German (thanks to Daniel Höly)
+* Translation release! Includes Danish and German (thanks to Daniel Hï¿½ly)
 * Moved script and CSS includes to use "enqueue_scripts".
 
 = 1.9 =
@@ -202,3 +207,15 @@ a.comment_quote_link {
 = 2.1.7 =
 
 * Fixed problem with smileys and paragraphs disappearing on some themes. Credit to Gabi for fixing this! Thanks Gabi!
+
+= 2.2 =
+
+* Release date - January 17, 2017
+* The plugin was adopted by Stanko Metodiev. I've talked with Joen and he agreed to transfer the plugin. The fun starts here.
+* Fix a few deprecated notices and PHP errors.
+
+== Upgrade Notice ==
+
+= 2.2 =
+
+The plugin wasn't maintained for some time. In this version I, the new author, I'm fixing a few PHP notices and errors, but I'm planning to do a few updates in the next weeks and months. Let me know if you have some ideas, suggestions or a feedback you'd like to share!

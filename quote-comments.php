@@ -1,24 +1,37 @@
 <?php
 /*
 Plugin Name: Quote Comments
-Plugin URI: http://noscope.com/?p=2498
+Plugin URI: https://github.com/metodiew/Quote-Comments
 Description: Creates a little quote icon in comment boxes which, when clicked, copies that comment to the comment box wrapped in blockquotes.
-Version: 2.1.7
-Author: Joen Asmussen
-Author URI: http://noscope.com
+Version: 2.2
+Author: Stanko Metodiev
+Author URI: https://metodiew.com
+*/
 
-Todo:
+/**
+ * @TODO
+ * 
+ * This is the real TO DO list:
+ * - fix all notifications, notes, issues and errors
+ * - improve the code base
+ */
+
+ 
+ /**
+  * That's the previous @TODO:
+  * 
 	- phase out "get_comment_time" option
 	- clean up remaining functions for reply
 	- improve reply layout
 	- recode JS
-
-
-*/
+  */
 
 load_plugin_textdomain('quote-comments', NULL, dirname(plugin_basename(__FILE__)) . "/languages");
 
-
+// Add a define variable, we'll need it later :)
+if ( ! defined( 'QUOTE_COMMENTS_VERSION' ) ) {
+	define( 'QUOTE_COMMENTS_VERSION', '2.2' );
+}
 
 function quote_scripts () {
 
@@ -312,9 +325,9 @@ function quotecomments_add_admin() {
 
 	global $qc_themename, $qc_shortname, $qc_options, $blog_id;
 
-	if ( $_GET['page'] == basename(__FILE__) ) {
+	if ( ! empty( $_GET['page'] ) && $_GET['page'] == basename(__FILE__) ) {
     
-		if ( 'save' == $_REQUEST['action'] ) {
+		if ( ! empty( $_REQUEST['action'] ) && 'save' == $_REQUEST['action'] ) {
 
 			// update options
 			foreach ($qc_options as $value) {
@@ -330,7 +343,8 @@ function quotecomments_add_admin() {
 	}
 
 	// add options page
-	add_options_page($qc_themename, $qc_themename, 8, basename(__FILE__), 'quotecomments_admin');
+	add_options_page($qc_themename, $qc_themename, 'manage_options', basename(__FILE__), 'quotecomments_admin');
+	//add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function);
 
 }
 
@@ -338,7 +352,9 @@ function quotecomments_admin() {
 
 	global $qc_themename, $qc_shortname, $qc_options;
 
-	if ( $_REQUEST['saved'] ) echo '<div id="message" class="updated fade"><p><strong>'.$qc_themename.' '.__('settings saved.','quote-comments').'</strong></p></div>';
+	if (! empty( $_REQUEST['saved'] ) ) {
+		echo '<div id="message" class="updated fade"><p><strong>'.$qc_themename.' '.__('settings saved.','quote-comments').'</strong></p></div>';
+	}
 
 
 	// Show options
@@ -367,7 +383,11 @@ function quotecomments_admin() {
 			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo __($value['name'],'quote-comments'); ?></label></th>
 			<td>
 				<input name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" type="<?php echo $value['type']; ?>" value="<?php if ( get_option( $value['id'] ) != "") { echo get_option( $value['id'] ); } else { echo $value['std']; } ?>" />
-				<?php echo __($value['desc'],'quote-comments'); ?>
+				<?php 
+				if ( ! empty( $value['desc'] ) ) {
+					_e($value['desc'],'quote-comments');
+				}
+				?>
 
 			</td>
 		</tr>
