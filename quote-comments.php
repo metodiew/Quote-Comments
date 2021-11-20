@@ -3,7 +3,7 @@
 Plugin Name: Quote Comments
 Plugin URI: https://github.com/metodiew/Quote-Comments
 Description: Creates a little quote icon in comment boxes which, when clicked, copies that comment to the comment box wrapped in blockquotes.
-Version: 2.2
+Version: 2.2.1
 Author: Stanko Metodiev
 Author URI: https://metodiew.com
 */
@@ -30,7 +30,7 @@ load_plugin_textdomain('quote-comments', NULL, dirname(plugin_basename(__FILE__)
 
 // Add a define variable, we'll need it later :)
 if ( ! defined( 'QUOTE_COMMENTS_VERSION' ) ) {
-	define( 'QUOTE_COMMENTS_VERSION', '2.2' );
+	define( 'QUOTE_COMMENTS_VERSION', '2.2.1' );
 }
 
 function quote_scripts () {
@@ -360,7 +360,6 @@ function quotecomments_admin() {
 	// Show options
 ?>
 <div class="wrap">
-<?php if ( function_exists('screen_icon') ) screen_icon(); ?>
 <h2><?php echo $qc_themename; _e(': General Options', 'quote-comments'); ?></h2>
 
 <form method="post" action="">
@@ -374,8 +373,7 @@ function quotecomments_admin() {
 	<?php // Smart options ?>
 	<table class="form-table">
 
-<?php foreach ($qc_options as $value) { 
-	
+<?php foreach ($qc_options as $value) {
 	switch ( $value['type'] ) {
 		case 'text':
 		?>

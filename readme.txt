@@ -3,7 +3,7 @@ Contributors: metodiew, Joen
 Donate link: https://metodiew.com/
 Tags: quote, comments, javascript, textile, wysiwyg
 Requires at least: 2.5.0
-Tested up to: 4.7
+Tested up to: 5.8.2
 Stable tag: 2.2
 Stable tag: trunk
 License: GPLv2 or later
@@ -76,6 +76,13 @@ a.comment_quote_link {
 }`
 
 == Changelog ==
+
+= 2.2.1 =
+* Release date - November 20, 2021
+* Removing a deprecated function `screen_icon()`
+* Bump the plugin version
+* Added a number of "TODOs" for fixing and improving the code base
+
 
 = 2.2 =
 
