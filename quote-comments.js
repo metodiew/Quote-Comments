@@ -5,23 +5,14 @@
 
 function jsEncode(str){
 
-	// ugly hack
-	str = " " + str;
-	
-	var aStr = str.split(''), i = aStr.length, aRet = [];
+	str = str.toString();
+	str = str.replace(/&/g, '&amp;');
+	str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	str = str.replace(/'/g, '&#039;');
+	str = str.replace(/"/g, '&quot;');
 
-	while (--i) {
-		var iC = aStr[i].charCodeAt();
-		
-		if (iC < 65 || iC > 127 || (iC>90 && iC<97)) {
-			aRet.push('&#'+iC+';');
-		} else {
-			aRet.push(aStr[i]);
-		}
-	}
-	
-	return aRet.reverse().join('');
-	
+	return str;
+
 }
 
 
@@ -50,10 +41,11 @@ function quote(postid, author, commentarea, commentID, mce) {
 			return true;
 		}
 
+		posttext = posttext.toString();
+
 		if (posttext=='') {		// quoting entire comment
 
-			// quoteing the entire thing
-			var selection = false;
+			// quoting the entire thing
 			var commentID = commentID.split("div-comment-")[1];
 
 			// quote entire comment as html
@@ -94,6 +86,10 @@ function quote(postid, author, commentarea, commentID, mce) {
 
 		}
 
+		// trim
+		var posttext = posttext.replace(/^\s+/, "");
+		var posttext = posttext.replace(/\s+$/, "");
+
 		// build quote
 		if (author) {
 			
@@ -104,7 +100,7 @@ function quote(postid, author, commentarea, commentID, mce) {
 
 		} else {
 
-			var quote='\n<blockquote cite="comment-'+postid+'">\n\n'+posttext+'</blockquote>\n';
+			var quote='<blockquote cite="comment-'+postid+'">\n'+posttext+'\n</blockquote>\n';
 
 		}
 
@@ -141,7 +137,7 @@ function inlinereply(postid, author, commentarea, commentID, mce) {
 		author = jsEncode(author);
 
 		// build quote
-		var quote='\n<strong><a href="#comment-'+postid+'">'+unescape(author)+'</a></strong>, \n\n';
+		var quote='<strong><a href="#comment-'+postid+'">'+unescape(author)+'</a></strong>, \n\n';
 
 
 		// send quoted content
