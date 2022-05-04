@@ -192,7 +192,7 @@ function add_quote_button_filter($output) {
 	
 	} else {
 	
-		return($output . $button);
+		return $output;
 	
 	}
 
