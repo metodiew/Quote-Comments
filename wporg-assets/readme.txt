@@ -29,8 +29,7 @@ Note: If it doesn't work for you, go to the Quote Comments options page, and try
 == Screenshots ==
 
 1. The default look: a little (Quote) link next to the comment time.
-2. An alternate look, where the icon has been styled to look like a Quote icon. Click the tiny quote icon to quote. 
-3. Quote Comments options page. 
+2. Quote Comments options page. 
 
 == Frequently Asked Questions ==
 
