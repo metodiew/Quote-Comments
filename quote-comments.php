@@ -93,7 +93,7 @@ function add_quote_button($output) {
 		
 		$button .= 'try { addComment.moveForm(\'div-comment-'.get_comment_ID().'\', \''.get_comment_ID().'\', \'respond\', \''.get_the_ID().'\'); } catch(e) {}; ';
 		$button .= 'return false;">';
-		$button .= "" . get_option('quote_comments_title') . "";
+		$button .= "" . esc_attr( get_option( 'quote_comments_title' ) ) . "";
 		
 		
 		// reply link
@@ -104,7 +104,7 @@ function add_quote_button($output) {
 			$button .= 'onmousedown="inlinereply(\'' . get_comment_ID() .'\', document.getElementById(\'name'.get_comment_ID().'\').innerHTML, \'comment\',\'div-comment-'. get_comment_ID() .'\''. $mce .');';
 			$button .= 'try { addComment.moveForm(\'div-comment-'.get_comment_ID().'\', \''.get_comment_ID().'\', \'respond\', \''.get_the_ID().'\'); } catch(e) {}; ';
 			$button .= 'return false;">';
-			$button .= "" . get_option('quote_comments_replytitle') . "";
+			$button .= "" . esc_attr( get_option( 'quote_comments_replytitle' ) ) . "";
 		}
 		
 		
@@ -164,7 +164,7 @@ function add_quote_button_filter($output) {
 		
 		$button .= 'try { addComment.moveForm(\'div-comment-'.get_comment_ID().'\', \''.get_comment_ID().'\', \'respond\', \''.get_the_ID().'\'); } catch(e) {}; ';
 		$button .= 'return false;">';
-		$button .= "" . get_option('quote_comments_title') . "";
+		$button .= "" . esc_attr( get_option('quote_comments_title') ) . "";
 		
 		
 		// reply link
@@ -175,7 +175,7 @@ function add_quote_button_filter($output) {
 			$button .= 'onmousedown="inlinereply(\'' . get_comment_ID() .'\', document.getElementById(\'name'.get_comment_ID().'\').innerHTML, \'comment\',\'div-comment-'. get_comment_ID() .'\''. $mce .');';
 			$button .= 'try { addComment.moveForm(\'div-comment-'.get_comment_ID().'\', \''.get_comment_ID().'\', \'respond\', \''.get_the_ID().'\'); } catch(e) {}; ';
 			$button .= 'return false;">';
-			$button .= "" . get_option('quote_comments_replytitle') . "";
+			$button .= "" . esc_attr( get_option('quote_comments_replytitle') ) . "";
 		}
 		
 		// close anchor link if body text
@@ -331,10 +331,17 @@ function quotecomments_add_admin() {
 
 			// update options
 			foreach ($qc_options as $value) {
-				update_option( $value['id'], $_REQUEST[ $value['id'] ] ); }
+				update_option( esc_attr( $value['id'] ), sanitize_text_field( $_REQUEST[$value['id']] ) );
+			}
 
 			foreach ($qc_options as $value) {
-				if( isset( $_REQUEST[ $value['id'] ] ) ) { update_option( $value['id'], $_REQUEST[ $value['id'] ]  ); } else { delete_option( $value['id'] ); } }
+				if( isset( $_REQUEST[ $value['id'] ] ) ) {
+					update_option( esc_attr( $value['id'] ), sanitize_text_field( $_REQUEST[ $value['id'] ] ) );
+
+				} else {
+					delete_option( esc_attr( $value['id'] ) );
+				}
+			}
 
 			header("Location: options-general.php?page=quote-comments.php&saved=true");
 			die;
@@ -380,7 +387,7 @@ function quotecomments_admin() {
 		<tr valign="top"> 
 			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo __($value['name'],'quote-comments'); ?></label></th>
 			<td>
-				<input name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" type="<?php echo $value['type']; ?>" value="<?php if ( get_option( $value['id'] ) != "") { echo get_option( $value['id'] ); } else { echo $value['std']; } ?>" />
+				<input name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" type="<?php echo $value['type']; ?>" value="<?php if ( get_option( $value['id'] ) != "") { echo esc_attr( get_option( $value['id'] ) ); } else { echo $value['std']; } ?>" />
 				<?php 
 				if ( ! empty( $value['desc'] ) ) {
 					_e($value['desc'],'quote-comments');
@@ -414,7 +421,7 @@ function quotecomments_admin() {
 			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo __($value['name'],'quote-comments'); ?></label></th>
 			<td><textarea name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" cols="<?php echo $ta_options['cols']; ?>" rows="<?php echo $ta_options['rows']; ?>"><?php 
 				if( get_option($value['id']) != "") {
-						echo __(stripslashes(get_option($value['id'])),'quote-comments');
+						echo __(stripslashes( esc_attr( get_option($value['id'] ) ) ),'quote-comments');
 					}else{
 						echo __($value['std'],'quote-comments');
 				}?></textarea><br /><?php echo __($value['desc'],'quote-comments'); ?></td>
@@ -428,7 +435,7 @@ function quotecomments_admin() {
 			<th scope="row"><?php echo __($value['name'],'quote-comments'); ?></th>
 			<td>
 				<?php foreach ($value['options'] as $key=>$option) { 
-				$radio_setting = get_option($value['id']);
+				$radio_setting = esc_attr( get_option($value['id'] ) );
 				if($radio_setting != ''){
 					if ($key == get_option($value['id']) ) {
 						$checked = "checked=\"checked\"";
