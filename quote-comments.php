@@ -4,8 +4,12 @@ Plugin Name: Quote Comments
 Plugin URI: https://github.com/metodiew/Quote-Comments
 Description: Creates a little quote icon in comment boxes which, when clicked, copies that comment to the comment box wrapped in blockquotes.
 Version: 3.0.0
+Requires at least: 4.0
+Requires PHP: 7.2
 Author: Stanko Metodiev
 Author URI: https://metodiew.com
+License: GPLv2 or later
+Text Domain: quote-comments
 */
 
 /**
