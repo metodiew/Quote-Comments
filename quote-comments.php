@@ -273,42 +273,35 @@ if (!is_admin()) {
 /**
  * Options Page
  */
-
-
-// Options
-$qc_themename = "Quote Comments";
-$qc_shortname = "quote_comments";
-
-
 $qc_options = array (
 
 	array(	"name" => __('Quote-link title?','quote-comments'),
 		//"desc" => __('Title of comment link.','quote-comments'),
-		"id" => $qc_shortname."_title",
+		"id" => "quote_comments_title",
 		"std" => "(Quote)",
 		"type" => "text"),
 
 	array(	"name" => __('Show author in quote?','quote-comments'),
 		"desc" => __('Show authors','quote-comments'),
-		"id" => $qc_shortname."_author",
+		"id" => "quote_comments_author",
 		"std" => true,
 		"type" => "checkbox"),
 
 	array(	"name" => __('Show reply link?','quote-comments'),
 		"desc" => __('Show reply link','quote-comments'),
-		"id" => $qc_shortname."_replylink",
+		"id" => "quote_comments_replylink",
 		"std" => false,
 		"type" => "checkbox"),
 
 	array(	"name" => __('Reply-link title?','quote-comments'),
 		//"desc" => __('Title of comment link.','quote-comments'),
-		"id" => $qc_shortname."_replytitle",
+		"id" => "quote_comments_replytitle",
 		"std" => "(Reply)",
 		"type" => "text"),
 
 	array(	"name" => __('Insert Quote link using which hook?','quote-comments'),
 		"desc" => __('Which plugin hook should be used to insert the quote link?','quote-comments'),
-		"id" => $qc_shortname."_pluginhook",
+		"id" => "quote_comments_pluginhook",
 		"std" => 'get_comment_text',
 		"type" => "radio",
 		"options" => array( 'get_comment_time' => "<code>get_comment_time</code> (places the link close to the authors name)",
@@ -323,17 +316,15 @@ $qc_options = array (
 
 function quotecomments_add_admin() {
 
-	global $qc_themename, $qc_shortname, $qc_options, $blog_id;
+	global $qc_options, $blog_id;
 
 	if ( ! empty( $_GET['page'] ) && $_GET['page'] == basename(__FILE__) ) {
     
 		if ( ! empty( $_REQUEST['action'] ) && 'save' == $_REQUEST['action'] ) {
 
-			// update options
-			foreach ($qc_options as $value) {
-				update_option( esc_attr( $value['id'] ), sanitize_text_field( $_REQUEST[$value['id']] ) );
-			}
+			// var_dump( $qc_options );
 
+			// update options
 			foreach ($qc_options as $value) {
 				if( isset( $_REQUEST[ $value['id'] ] ) ) {
 					update_option( esc_attr( $value['id'] ), sanitize_text_field( $_REQUEST[ $value['id'] ] ) );
@@ -350,24 +341,24 @@ function quotecomments_add_admin() {
 	}
 
 	// add options page
-	add_options_page($qc_themename, $qc_themename, 'manage_options', basename(__FILE__), 'quotecomments_admin');
+	add_options_page( 'Quote Comments', 'Quote Comments', 'manage_options', basename(__FILE__), 'quotecomments_admin');
 	//add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function);
 
 }
 
 function quotecomments_admin() {
 
-	global $qc_themename, $qc_shortname, $qc_options;
+	global $qc_options;
 
 	if (! empty( $_REQUEST['saved'] ) ) {
-		echo '<div id="message" class="updated fade"><p><strong>'.$qc_themename.' '.__('settings saved.','quote-comments').'</strong></p></div>';
+		echo '<div id="message" class="updated fade"><p><strong> Quote Comments '.__('settings saved.','quote-comments').'</strong></p></div>';
 	}
 
 
 	// Show options
 ?>
 <div class="wrap">
-<h2><?php echo $qc_themename; _e(': General Options', 'quote-comments'); ?></h2>
+<h2><?php _e('Quote Comments: General Options', 'quote-comments'); ?></h2>
 
 <form method="post" action="">
 
