@@ -1,5 +1,5 @@
 === Quote Comments ===
-Contributors: metodiew, Joen
+Contributors: metodiew
 Donate link: https://metodiew.com/
 Tags: quote, comments, javascript, textile, wysiwyg
 Requires at least: 2.5.0
@@ -76,6 +76,12 @@ a.comment_quote_link {
 }`
 
 == Changelog ==
+
+= 3.0.0 =
+* Release date - May 10, 2025
+* Address the vulnerability report from https://patchstack.com/database/report-preview/d7891563-a582-42b3-95ef-8985948d7d74?pin=InwTOqOOYguvviZ6
+* Add additional escaping
+* Optimize the code base
 
 = 2.2.1 =
 * Release date - November 20, 2021
