@@ -2,8 +2,8 @@
 Contributors: metodiew
 Donate link: https://metodiew.com/
 Tags: quote, comments, javascript, textile, wysiwyg
-Requires at least: 2.5.0
-Tested up to: 5.8.2
+Requires at least: 5.0.0
+Tested up to: 6.8.1
 Stable tag: 2.2
 Stable tag: trunk
 License: GPLv2 or later
