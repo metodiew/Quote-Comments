@@ -20,7 +20,7 @@ Text Domain: quote-comments
  * Load plugin textdomain.
  */
 function quote_comments_load_textdomain() {
-	load_plugin_textdomain( 'quote-comments', NULL, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'quote-comments', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 add_action( 'init', 'quote_comments_load_textdomain' );
 
@@ -255,44 +255,46 @@ if (!is_admin()) {
 
 
 /**
- * Options Page
+ * Options Page values
  */
-$qc_options = array (
+function quote_comments_options_values() {
+	$qc_options = array (
 
-	array(	"name" => __('Quote-link title?','quote-comments'),
-		//"desc" => __('Title of comment link.','quote-comments'),
-		"id" => "quote_comments_title",
-		"std" => "(Quote)",
-		"type" => "text"),
+		array(	"name" => __('Quote-link title?','quote-comments'),
+			"desc" => __('Title of comment link.','quote-comments'),
+			"id" => "quote_comments_title",
+			"std" => "(Quote)",
+			"type" => "text"),
 
-	array(	"name" => __('Show author in quote?','quote-comments'),
-		"desc" => __('Show authors','quote-comments'),
-		"id" => "quote_comments_author",
-		"std" => true,
-		"type" => "checkbox"),
+		array(	"name" => __('Show author in quote?','quote-comments'),
+			"desc" => __('Show authors','quote-comments'),
+			"id" => "quote_comments_author",
+			"std" => true,
+			"type" => "checkbox"),
 
-	array(	"name" => __('Show reply link?','quote-comments'),
-		"desc" => __('Show reply link','quote-comments'),
-		"id" => "quote_comments_replylink",
-		"std" => false,
-		"type" => "checkbox"),
+		array(	"name" => __('Show reply link?','quote-comments'),
+			"desc" => __('Show reply link','quote-comments'),
+			"id" => "quote_comments_replylink",
+			"std" => false,
+			"type" => "checkbox"),
 
-	array(	"name" => __('Reply-link title?','quote-comments'),
-		//"desc" => __('Title of comment link.','quote-comments'),
-		"id" => "quote_comments_replytitle",
-		"std" => "(Reply)",
-		"type" => "text"),
+		array(	"name" => __('Reply-link title?','quote-comments'),
+			//"desc" => __('Title of comment link.','quote-comments'),
+			"id" => "quote_comments_replytitle",
+			"std" => "(Reply)",
+			"type" => "text"),
 
-	array(	"name" => __('Insert Quote link using which hook?','quote-comments'),
-		"desc" => __('Which plugin hook should be used to insert the quote link?','quote-comments'),
-		"id" => "quote_comments_pluginhook",
-		"std" => 'get_comment_text',
-		"type" => "radio",
-		"options" => array( 'get_comment_time' => "<code>get_comment_time</code> (places the link close to the authors name)",
-							'get_comment_text' => "<code>get_comment_text</code> (places the link after the comment body text -- most compatible)") ),
+		array(	"name" => __('Insert Quote link using which hook?','quote-comments'),
+			"desc" => __('Which plugin hook should be used to insert the quote link?','quote-comments'),
+			"id" => "quote_comments_pluginhook",
+			"std" => 'get_comment_text',
+			"type" => "radio",
+			"options" => array( 'get_comment_time' => "<code>get_comment_time</code> (places the link close to the authors name)",
+								'get_comment_text' => "<code>get_comment_text</code> (places the link after the comment body text -- most compatible)") ),
+	);
 
-
-);
+	return $qc_options;
+}
 
 
 
@@ -300,7 +302,7 @@ $qc_options = array (
 
 function quotecomments_add_admin() {
 
-	global $qc_options, $blog_id;
+	$qc_options = quote_comments_options_values();
 
 	if ( ! empty( $_GET['page'] ) && $_GET['page'] == basename(__FILE__) ) {
     
@@ -330,7 +332,7 @@ function quotecomments_add_admin() {
 
 function quotecomments_admin() {
 
-	global $qc_options;
+	$qc_options = quote_comments_options_values();
 
 	if (! empty( $_REQUEST['saved'] ) ) {
 		echo '<div id="message" class="updated fade"><p><strong> Quote Comments '.__('settings saved.','quote-comments').'</strong></p></div>';
@@ -351,12 +353,12 @@ function quotecomments_admin() {
 		case 'text':
 		?>
 		<tr valign="top"> 
-			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo __($value['name'],'quote-comments'); ?></label></th>
+			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label></th>
 			<td>
 				<input name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" type="<?php echo $value['type']; ?>" value="<?php if ( get_option( $value['id'] ) != "") { echo esc_attr( get_option( $value['id'] ) ); } else { echo $value['std']; } ?>" />
 				<?php 
 				if ( ! empty( $value['desc'] ) ) {
-					_e($value['desc'],'quote-comments');
+					echo $value['desc'];
 				}
 				?>
 
@@ -368,7 +370,7 @@ function quotecomments_admin() {
 		case 'select':
 		?>
 		<tr valign="top">
-			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo __($value['name'],'quote-comments'); ?></label></th>
+			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label></th>
 				<td>
 					<select name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>">
 					<?php foreach ($value['options'] as $option) { ?>
@@ -384,13 +386,13 @@ function quotecomments_admin() {
 		$ta_options = $value['options'];
 		?>
 		<tr valign="top"> 
-			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo __($value['name'],'quote-comments'); ?></label></th>
+			<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label></th>
 			<td><textarea name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" cols="<?php echo $ta_options['cols']; ?>" rows="<?php echo $ta_options['rows']; ?>"><?php 
 				if( get_option($value['id']) != "") {
-						echo __(stripslashes( esc_attr( get_option($value['id'] ) ) ),'quote-comments');
+						echo stripslashes( esc_attr( get_option($value['id'] ) ) );
 					}else{
-						echo __($value['std'],'quote-comments');
-				}?></textarea><br /><?php echo __($value['desc'],'quote-comments'); ?></td>
+						echo $value['std'];
+				}?></textarea><br /><?php echo $value['desc']; ?></td>
 		</tr>
 		<?php
 		break;
@@ -398,7 +400,7 @@ function quotecomments_admin() {
 		case 'radio':
 		?>
 		<tr valign="top"> 
-			<th scope="row"><?php echo __($value['name'],'quote-comments'); ?></th>
+			<th scope="row"><?php echo $value['name']; ?></th>
 			<td>
 				<?php foreach ($value['options'] as $key=>$option) { 
 				$radio_setting = esc_attr( get_option($value['id'] ) );
@@ -425,7 +427,7 @@ function quotecomments_admin() {
 		case 'checkbox':
 		?>
 		<tr valign="top"> 
-			<th scope="row"><?php echo __($value['name'],'quote-comments'); ?></th>
+			<th scope="row"><?php echo $value['name']; ?></th>
 			<td>
 				<?php
 					if(get_option($value['id'])){
@@ -435,7 +437,7 @@ function quotecomments_admin() {
 					}
 				?>
 				<input type="checkbox" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" value="true" <?php echo $checked; ?> />
-				<label for="<?php echo $value['id']; ?>"><?php echo __($value['desc'],'quote-comments'); ?></label>
+				<label for="<?php echo $value['id']; ?>"><?php echo $value['desc']; ?></label>
 			</td>
 		</tr>
 		<?php
