@@ -3,61 +3,44 @@
 Plugin Name: Quote Comments
 Plugin URI: https://github.com/metodiew/Quote-Comments
 Description: Creates a little quote icon in comment boxes which, when clicked, copies that comment to the comment box wrapped in blockquotes.
-Version: 2.2.1
+Version: 3.0.0
 Author: Stanko Metodiev
 Author URI: https://metodiew.com
 */
 
 /**
- * @TODO
- * 
- * This is the real TO DO list:
- * - fix all notifications, notes, issues and errors
- * - improve the code base
+ * @TODO: apply some coding styling updates
  */
 
- 
- /**
-  * That's the previous @TODO:
-  * 
-	- phase out "get_comment_time" option
-	- clean up remaining functions for reply
-	- improve reply layout
-	- recode JS
-  */
+/**
+ * Load plugin textdomain.
+ */
+function quote_comments_load_textdomain() {
+	load_plugin_textdomain( 'quote-comments', NULL, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'quote_comments_load_textdomain' );
 
-load_plugin_textdomain('quote-comments', NULL, dirname(plugin_basename(__FILE__)) . "/languages");
-
-// Add a define variable, we'll need it later :)
+/**
+ * Define variable for the plugin version.
+ */
 if ( ! defined( 'QUOTE_COMMENTS_VERSION' ) ) {
-	define( 'QUOTE_COMMENTS_VERSION', '2.2.1' );
+	define( 'QUOTE_COMMENTS_VERSION', '3.0.0' );
 }
 
-function quote_scripts () {
-
-	if ( function_exists('plugin_url') )
-		$plugin_url = plugin_url();
-	else
-		$plugin_url = get_option('siteurl') . '/wp-content/plugins/' . plugin_basename(dirname(__FILE__));
-
-	wp_register_script('quote_comments_js', ($plugin_url . '/quote-comments.js'), false, '1.0');
-	wp_enqueue_script('quote_comments_js');
+/**
+ * Enqueue Plugin Assets
+ */
+function quote_comments_assets () {
+	wp_enqueue_script( 'quote-comments',  plugins_url( 'quote-comments.js' , __FILE__ ), array(), QUOTE_COMMENTS_VERSION, array( 'strategy'  => 'defer', 'in_footer' => true ) );
 
 }
-if (!is_admin()) {
-	add_action('init', 'quote_scripts');
-}
+add_action( 'wp_enqueue_scripts', 'quote_comments_assets' );
 
 
-
-
-
-
-function add_quote_button($output) {
-
+function add_quote_button( $output ) {
 
 	global $user_ID;
-	if (get_option('comment_registration') && !$user_ID) {
+	if ( get_option( 'comment_registration' ) && ! $user_ID ) {
 		
 		return $output;
 		
@@ -78,7 +61,7 @@ function add_quote_button($output) {
 		//if (get_option('quote_comments_pluginhook') == "get_comment_time") {
 			$button .= '</a>';
 		//}
-		
+
 		$button .= '&nbsp;&nbsp;';
 		$button .= '<span id="name'.get_comment_ID().'" style="display: none;">'.get_comment_author().'</span>';
 		$button .= '<a class="comment_quote_link" ';
@@ -150,7 +133,7 @@ function add_quote_button_filter($output) {
 
 		// quote link
 		$button = "";
-		$button .= '</a>&nbsp;&nbsp;';
+		// $button .= '</a>&nbsp;&nbsp;';
 		$button .= '<span id="name'.get_comment_ID().'" style="display: none;">'.get_comment_author().'</span>';
 		$button .= '<a class="comment_quote_link" ';
 		$button .= 'href="javascript:void(null)" ';
@@ -183,8 +166,6 @@ function add_quote_button_filter($output) {
 			$button .= "</a>";
 		}
 
-
-
 		if (comments_open() && have_comments() && get_comment_type() != "pingback" && get_comment_type() != "trackback") {
 			return($output . $button);
 		}
@@ -209,7 +190,6 @@ if (get_option('quote_comments_pluginhook') == 'get_comment_time') {
 	}
 } else {
 	if (!is_admin()) {
-		//add_action('get_comment_text', 'add_quote_button');
 		add_filter('get_comment_text', 'add_quote_button');
 	}
 }
@@ -322,8 +302,6 @@ function quotecomments_add_admin() {
     
 		if ( ! empty( $_REQUEST['action'] ) && 'save' == $_REQUEST['action'] ) {
 
-			// var_dump( $qc_options );
-
 			// update options
 			foreach ($qc_options as $value) {
 				if( isset( $_REQUEST[ $value['id'] ] ) ) {
@@ -361,13 +339,6 @@ function quotecomments_admin() {
 <h2><?php _e('Quote Comments: General Options', 'quote-comments'); ?></h2>
 
 <form method="post" action="">
-
-	<p class="submit">
-		<input class="button-primary" name="save" type="submit" value="<?php _e('Save changes','quote-comments'); ?>" />    
-		<input type="hidden" name="action" value="save" />
-	</p>
-
-
 	<?php // Smart options ?>
 	<table class="form-table">
 
@@ -489,7 +460,3 @@ function quotecomments_admin() {
 }
 
 add_action('admin_menu' , 'quotecomments_add_admin'); 
-
-
-
-?>
